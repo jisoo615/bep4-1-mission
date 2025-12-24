@@ -3,25 +3,33 @@ package com.back.boundedContext.post.entity;
 
 import com.back.boundedContext.member.entity.Member;
 import com.back.global.jpa.entity.BaseIdAndTime;
-import jakarta.persistence.*;
+import com.back.shared.post.dto.PostCommentDto;
+import com.back.shared.post.event.PostCommentCreatedEvent;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.PERSIST;
+import static jakarta.persistence.CascadeType.REMOVE;
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
 @NoArgsConstructor
+@Getter
 public class Post extends BaseIdAndTime {
     @ManyToOne(fetch = LAZY)
     private Member author;
     private String title;
     @Column(columnDefinition = "LONGTEXT")
     private String content;
-
-    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    List<PostComment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = {PERSIST, REMOVE}, orphanRemoval = true)
+    private List<PostComment> comments = new ArrayList<>();
 
     public Post(Member author, String title, String content) {
         this.author = author;
@@ -33,7 +41,8 @@ public class Post extends BaseIdAndTime {
         PostComment postComment = new PostComment(this, author, content);
 
         comments.add(postComment);
-        author.increaseActivityScore(1);// 댓글 쓰면 1점
+
+        publishEvent(new PostCommentCreatedEvent(new PostCommentDto(postComment)));
 
         return postComment;
     }
