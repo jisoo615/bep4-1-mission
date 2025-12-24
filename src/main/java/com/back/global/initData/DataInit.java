@@ -53,12 +53,12 @@ public class DataInit {// 빌드가 다 되고 처음에 시작하는 클래스�
         Member user2Member = memberFacade.findByUsername("user2").get();
         Member user3Member = memberFacade.findByUsername("user3").get();
 
-        Post post1 = postFacade.write(user1Member, "제목1", "내용1");
-        Post post2 = postFacade.write(user1Member, "제목2", "내용2");
-        Post post3 = postFacade.write(user1Member, "제목3", "내용3");
-        Post post4 = postFacade.write(user2Member, "제목4", "내용4");
-        Post post5 = postFacade.write(user2Member, "제목5", "내용5");
-        Post post6 = postFacade.write(user3Member, "제목6", "내용6");
+        Post post1 = postFacade.write(user1Member, "제목1", "내용1").getData();
+        Post post2 = postFacade.write(user1Member, "제목2", "내용2").getData();
+        Post post3 = postFacade.write(user1Member, "제목3", "내용3").getData();
+        Post post4 = postFacade.write(user2Member, "제목4", "내용4").getData();
+        Post post5 = postFacade.write(user2Member, "제목5", "내용5").getData();
+        Post post6 = postFacade.write(user3Member, "제목6", "내용6").getData();
     }
 
     @Transactional
