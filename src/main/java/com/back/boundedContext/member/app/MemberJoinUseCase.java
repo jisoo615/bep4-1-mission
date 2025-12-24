@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MemberJoinUseCase {
     private final MemberRepository memberRepository;
-    private final MemberFacade memberFacade;
 
     public RsData<Member> join(String username, String password, String nickname) {
         memberRepository.findByUsername(username).ifPresent(m -> {
