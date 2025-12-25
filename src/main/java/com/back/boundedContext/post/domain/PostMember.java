@@ -1,9 +1,6 @@
 package com.back.boundedContext.post.domain;
 
-import com.back.global.jpa.entity.BaseIdAndTime;
-import com.back.global.jpa.entity.BaseIdAndTimeManual;
 import com.back.shared.member.domain.ReplicaMember;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
