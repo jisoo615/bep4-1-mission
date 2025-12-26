@@ -1,9 +1,7 @@
 package com.back.boundedContext.post.in;
 
-import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
-import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.post.domain.PostMember;
 import com.back.global.rsData.RsData;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +33,9 @@ public class PostDataInit {// 빌드가 다 되고 처음에 시작하는 클래
     @Transactional
     public void makeBasePosts(){
         if(postFacade.count() >0) return;
-        PostMember user1Member = postFacade.findPostMemberByUsername("user1").get();
-        PostMember user2Member = postFacade.findPostMemberByUsername("user2").get();
-        PostMember user3Member = postFacade.findPostMemberByUsername("user3").get();
+        PostMember user1Member = postFacade.findMemberByUsername("user1").get();
+        PostMember user2Member = postFacade.findMemberByUsername("user2").get();
+        PostMember user3Member = postFacade.findMemberByUsername("user3").get();
 
         RsData<Post> post1RsData = postFacade.write(user1Member, "제목1", "내용1");
         log.debug(post1RsData.getMsg());
@@ -67,9 +65,9 @@ public class PostDataInit {// 빌드가 다 되고 처음에 시작하는 클래
         Post post5 = postFacade.findById(5).get();
         Post post6 = postFacade.findById(6).get();
 
-        PostMember user1Member = postFacade.findPostMemberByUsername("user1").get();
-        PostMember user2Member = postFacade.findPostMemberByUsername("user2").get();
-        PostMember user3Member = postFacade.findPostMemberByUsername("user3").get();
+        PostMember user1Member = postFacade.findMemberByUsername("user1").get();
+        PostMember user2Member = postFacade.findMemberByUsername("user2").get();
+        PostMember user3Member = postFacade.findMemberByUsername("user3").get();
 
         if (post1.hasComments()) return;
 

@@ -2,8 +2,6 @@ package com.back.boundedContext.post.app;
 
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
-import com.back.boundedContext.post.out.PostMemberRepository;
-import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.rsData.RsData;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +40,7 @@ public class PostFacade {
     }
 
     @Transactional(readOnly = true)
-    public Optional<PostMember> findPostMemberByUsername(String username) {
+    public Optional<PostMember> findMemberByUsername(String username) {
         return postSupport.findMemberByUsername(username);
     }
 }
