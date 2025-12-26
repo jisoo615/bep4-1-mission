@@ -1,9 +1,6 @@
 package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.member.domain.MemberPolicy;
-import com.back.boundedContext.member.in.ApiV1MemberController;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.eventPublisher.EventPublisher;
