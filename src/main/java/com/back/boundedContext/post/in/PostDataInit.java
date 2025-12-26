@@ -1,10 +1,9 @@
-package com.back.global.initData;
+package com.back.boundedContext.post.in;
 
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.member.app.MemberFacade;
-import com.back.boundedContext.post.app.PostWriteUseCase;
 import com.back.boundedContext.post.domain.PostMember;
 import com.back.global.rsData.RsData;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @Slf4j
-public class DataInit {// 빌드가 다 되고 처음에 시작하는 클래스임.
-    private final DataInit self;
+public class PostDataInit {// 빌드가 다 되고 처음에 시작하는 클래스임.
+    private final PostDataInit self;
     private final MemberFacade memberFacade;
     private final PostFacade postFacade;
 
-    public DataInit(@Lazy DataInit self, MemberFacade memberFacade, PostFacade postFacade) {
+    public PostDataInit(@Lazy PostDataInit self, MemberFacade memberFacade, PostFacade postFacade) {
         this.self = self;
         this.memberFacade = memberFacade;
         this.postFacade = postFacade;
