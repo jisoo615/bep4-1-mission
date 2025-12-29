@@ -41,3 +41,4 @@ db_dev.mv.db
 
 ### env
 .env.default
+.env
