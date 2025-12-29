@@ -34,9 +34,9 @@ logging:
 custom:
   global:
     internalBackUrl: http://localhost:${server.port:8080}
-    member:
-      password:
-        changeDays: 90
+  member:
+    password:
+      changeDays: 90
   market:
     toss:
       payments:
