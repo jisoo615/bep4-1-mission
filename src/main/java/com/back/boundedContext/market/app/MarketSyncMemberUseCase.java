@@ -33,7 +33,7 @@ public class MarketSyncMemberUseCase {
         if (isNew) {// 새로운 멤버면 카트 생성 이벤트 생성
             eventPublisher.publish(
                     new MarketMemberCreatedEvent(
-                            new MarketMemberDto(_member)
+                            _member.toDto()
                     )
             );
         }
