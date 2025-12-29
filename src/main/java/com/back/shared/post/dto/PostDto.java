@@ -1,12 +1,19 @@
 package com.back.shared.post.dto;
 
 import com.back.boundedContext.post.domain.Post;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
+/**
+ * onConstructor_ = @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+ * 수정 불가능한(final) DTO를 JSON으로 안전하게 변환받기 위한 설정
+ */
+@AllArgsConstructor(
+        onConstructor_ = @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+)
 @Getter
 public class PostDto {
     private final int id;
