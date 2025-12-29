@@ -4,7 +4,10 @@ import com.back.boundedContext.cash.domain.CashMember;
 import com.back.boundedContext.cash.domain.Wallet;
 import com.back.boundedContext.cash.out.CashMemberRepository;
 import com.back.boundedContext.cash.out.WalletRepository;
+import com.back.boundedContext.market.domain.Order;
+import com.back.boundedContext.market.out.OrderRepository;
 import com.back.shared.cash.dto.CashMemberDto;
+import com.back.shared.market.dto.OrderDto;
 import com.back.shared.market.event.MarketOrderPaymentRequestedEvent;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ public class CashFacade {
     private final CashSyncMemberUseCase cashSyncMemberUseCase;
     private final CashCreateWalletUseCase cashCreateWalletUseCase;
     private final CashCompleteOrderPaymentUseCase cashCompleteOrderPaymentUseCase;
+    private final OrderRepository orderRepository;
 
     @Transactional
     public CashMember syncMember(MemberDto member) {
@@ -42,8 +46,8 @@ public class CashFacade {
     }
 
     @Transactional
-    public void handle(MarketOrderPaymentRequestedEvent event) {
-        cashCompleteOrderPaymentUseCase.handle(event);
+    public void completeOrderPayment(OrderDto order, long pgPaymentAmount) {
+        cashCompleteOrderPaymentUseCase.completeOrderPayment(order, pgPaymentAmount);
     }
 
     @Transactional(readOnly = true)
