@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
@@ -23,6 +24,7 @@ public class PostDataInit {// 빌드가 다 되고 처음에 시작하는 클래
     }
 
     @Bean
+    @Order(2)
     public ApplicationRunner baseInitDataRunner() {
         return args -> {
             self.makeBasePosts();
