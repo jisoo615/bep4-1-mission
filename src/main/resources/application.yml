@@ -31,6 +31,10 @@ logging:
     org.hibernate.orm.jdbc.extract: TRACE
     org.springframework.transaction.interceptor: TRACE
 
+  batch:
+    job:
+      enabled: false
+
 custom:
   global:
     internalBackUrl: http://localhost:${server.port:8080}
