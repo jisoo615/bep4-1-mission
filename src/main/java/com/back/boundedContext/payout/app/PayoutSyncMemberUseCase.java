@@ -1,7 +1,7 @@
 package com.back.boundedContext.payout.app;
 
 import com.back.boundedContext.payout.domain.PayoutMember;
-import com.back.boundedContext.payout.out.PayoutRepository;
+import com.back.boundedContext.payout.out.PayoutMemberRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.shared.member.dto.MemberDto;
 import com.back.shared.payout.event.PayoutMemberCreatedEvent;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class PayoutSyncMemberUseCase {
-    private final PayoutRepository payoutRepository;
+    private final PayoutMemberRepository payoutMemberRepository;
     private final EventPublisher eventPublisher;
 
     public PayoutMember syncMember(MemberDto member) {
-        boolean isNew = !payoutRepository.existsById(member.getId());
+        boolean isNew = !payoutMemberRepository.existsById(member.getId());
 
-        PayoutMember _member = payoutRepository.save(
+        PayoutMember _member = payoutMemberRepository.save(
                 new PayoutMember(
                         member.getId(),
                         member.getCreateDate(),
