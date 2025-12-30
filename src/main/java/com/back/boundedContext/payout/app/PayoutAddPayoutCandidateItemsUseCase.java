@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -43,7 +42,7 @@ public class PayoutAddPayoutCandidateItemsUseCase {
             OrderDto order,
             OrderItemDto orderItem
     ) {
-        PayoutMember holding = payoutSupport.findHolingMember().get();
+        PayoutMember system = payoutSupport.findSystemMember().get();
         PayoutMember buyer = payoutSupport.findMemberById(orderItem.getBuyerId()).get();
         PayoutMember seller = payoutSupport.findMemberById(orderItem.getSellerId()).get();
 
@@ -53,7 +52,7 @@ public class PayoutAddPayoutCandidateItemsUseCase {
                 orderItem.getId(),
                 order.getPaymentDate(),
                 buyer,
-                holding, // 시스템에게 수수료
+                system, // 시스템에게 수수료
                 orderItem.getPayoutFee()
         );
 

@@ -34,6 +34,8 @@ logging:
 custom:
   global:
     internalBackUrl: http://localhost:${server.port:8080}
+  payout:
+    readyWaitingDays: 14
   member:
     password:
       changeDays: 90
@@ -41,5 +43,5 @@ custom:
     toss:
       payments:
         secretKey: ${TOSS_PAYMENTS_SECRET_KEY}
-  product:
-    payoutRate: 90
+    product:
+      payoutRate: 90

@@ -22,8 +22,8 @@ public class OrderItemDto implements CanGetModelTypeCode {
     private final long price;
     private final long salePrice;
     private final double payoutRate;
-    private final long payoutFee;
-    private final long salePriceWithoutFee;
+    private final long payoutFee;// 수수료
+    private final long salePriceWithoutFee;// 수수료 뺀 값
 
 
     @Override
