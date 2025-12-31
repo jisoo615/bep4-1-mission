@@ -1,4 +1,4 @@
-package com.back.shared.post.dto;
+package com.back.shared.payout.dto;
 
 import com.back.standard.modelType.CanGetModelTypeCode;
 import lombok.AllArgsConstructor;
@@ -8,17 +8,18 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class PostDto implements CanGetModelTypeCode {
+public class PayoutDto implements CanGetModelTypeCode {
     private final int id;
     private final LocalDateTime createDate;
     private final LocalDateTime modifyDate;
-    private final int authorId;
-    private final String authorName;
-    private final String title;
-    private final String content;
+    private int payeeId;
+    private String payeeName;
+    private LocalDateTime payoutDate;
+    private long amount;
+    private boolean isPayeeSystem;
 
     @Override
     public String getModelTypeCode() {
-        return "Post";
+        return "Payout";
     }
 }

@@ -20,6 +20,7 @@ public class PayoutFacade {
     private final PayoutAddPayoutCandidateItemsUseCase payoutAddPayoutCandidateItemsUseCase;
     private final PayoutCollectPayoutItemsMoreUseCase payoutCollectPayoutItemsMoreUseCase;
     private final PayoutSupport payoutSupport;
+    private final PayoutCompletePayoutsMoreUseCase payoutCompletePayoutsMoreUseCase;
 
     @Transactional
     public void syncMember(MemberDto member) {
@@ -27,8 +28,8 @@ public class PayoutFacade {
     }
 
     @Transactional
-    public Payout createPayout(PayoutMemberDto payee) {
-        return payoutCreatePayoutUseCase.createPayout(payee);
+    public Payout createPayout(int payeeId) {
+        return payoutCreatePayoutUseCase.createPayout(payeeId);
     }
 
     @Transactional
@@ -45,5 +46,10 @@ public class PayoutFacade {
     public List<PayoutCandidateItem> findPayoutCandidateItems() {
         return payoutSupport
                 .findPayoutCandidateItems();
+    }
+
+    @Transactional
+    public RsData<Integer> completePayoutsMore(int limit) {
+        return payoutCompletePayoutsMoreUseCase.completePayoutsMore(limit);
     }
 }

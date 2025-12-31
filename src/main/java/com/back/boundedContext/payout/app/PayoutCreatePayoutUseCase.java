@@ -17,11 +17,11 @@ public class PayoutCreatePayoutUseCase {
     private final PayoutMemberRepository payoutMemberRepository;
 
     /**
-     * @param payee 판매자, 돈을 받을 사람, 정산하기 위해
+     * @param payeeId 판매자, 돈을 받을 사람, 정산하기 위해
      * @return
      */
-    public Payout createPayout(PayoutMemberDto payee) {
-        PayoutMember _payee = payoutMemberRepository.getReferenceById(payee.getId());
+    public Payout createPayout(int payeeId) {
+        PayoutMember _payee = payoutMemberRepository.getReferenceById(payeeId);
 
         Payout payout = payoutRepository.save(
                 new Payout(
