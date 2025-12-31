@@ -13,27 +13,24 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-public class PayoutCollectItemsBatchJobConfig {
+public class PayoutCollectItemsAndCompletePayoutsBatchJobConfig {
     private static final int CHUNK_SIZE = 10;
 
     private final PayoutFacade payoutFacade;
 
-    public PayoutCollectItemsBatchJobConfig(PayoutFacade payoutFacade) {
+    public PayoutCollectItemsAndCompletePayoutsBatchJobConfig(PayoutFacade payoutFacade) {
         this.payoutFacade = payoutFacade;
     }
 
-    /**
-     * Batch 는 Job 아래 Step
-     * 빈으로 등록해서 쓸 수 있음
-     */
-
     @Bean
-    public Job payoutCollectItemsJob(
+    public Job payoutCollectItemsAndCompletePayoutsJob(
             JobRepository jobRepository,
-            Step payoutCollectItemsStep
+            Step payoutCollectItemsStep,
+            Step payoutCompletePayouts
     ) {
-        return new JobBuilder("payoutCollectItemsJob", jobRepository)
+        return new JobBuilder("payoutCollectItemsAndCompletePayoutsJob", jobRepository)
                 .start(payoutCollectItemsStep)
+                .next(payoutCompletePayouts)
                 .build();
     }
 
@@ -41,10 +38,29 @@ public class PayoutCollectItemsBatchJobConfig {
     public Step payoutCollectItemsStep(JobRepository jobRepository) {
         return new StepBuilder("payoutCollectItemsStep", jobRepository)
                 .tasklet((contribution, chunkContext) -> {
+                    // candidate 데이터에서 실제로 payout item 데이터를 만드는 것
                     int processedCount = payoutFacade.collectPayoutItemsMore(CHUNK_SIZE).getData();
                     /**
                      * CHUNK_SIZE(10)개씩 처리, 끝날때까지(processedCount가 0이 될 때까지)
                      */
+                    if (processedCount == 0) {
+                        return RepeatStatus.FINISHED;
+                    }
+
+                    contribution.incrementWriteCount(processedCount);
+
+                    return RepeatStatus.CONTINUABLE;
+                })
+                .build();
+    }
+
+    @Bean
+    public Step payoutCompletePayouts(JobRepository jobRepository) {
+        return new StepBuilder("payoutCompletePayouts", jobRepository)
+                .tasklet((contribution, chunkContext) -> {
+                    // 정산 지급을 하는 과정, 각자의 wallet에 넣엉줌
+                    int processedCount = payoutFacade.completePayoutsMore(CHUNK_SIZE).getData();
+
                     if (processedCount == 0) {
                         return RepeatStatus.FINISHED;
                     }

@@ -14,27 +14,31 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Configuration
 @Slf4j
-public class PostDataInit {// 빌드가 다 되고 처음에 시작하는 클래스임.
+public class PostDataInit {
     private final PostDataInit self;
     private final PostFacade postFacade;
 
-    public PostDataInit(@Lazy PostDataInit self, PostFacade postFacade) {
+    public PostDataInit(
+            @Lazy PostDataInit self,
+            PostFacade postFacade
+    ) {
         this.self = self;
         this.postFacade = postFacade;
     }
 
     @Bean
     @Order(2)
-    public ApplicationRunner baseInitDataRunner() {
+    public ApplicationRunner postDataInitApplicationRunner() {
         return args -> {
             self.makeBasePosts();
-            self.makeBaseComments();
+            self.makeBasePostComments();
         };
     }
 
     @Transactional
-    public void makeBasePosts(){
-        if(postFacade.count() >0) return;
+    public void makeBasePosts() {
+        if (postFacade.count() > 0) return;
+
         PostMember user1Member = postFacade.findMemberByUsername("user1").get();
         PostMember user2Member = postFacade.findMemberByUsername("user2").get();
         PostMember user3Member = postFacade.findMemberByUsername("user3").get();
@@ -59,7 +63,7 @@ public class PostDataInit {// 빌드가 다 되고 처음에 시작하는 클래
     }
 
     @Transactional
-    public void makeBaseComments(){
+    public void makeBasePostComments() {
         Post post1 = postFacade.findById(1).get();
         Post post2 = postFacade.findById(2).get();
         Post post3 = postFacade.findById(3).get();
