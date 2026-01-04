@@ -5,6 +5,7 @@ import com.back.boundedContext.member.app.MemberFacade;
 import com.back.shared.post.event.PostCommentCreatedEvent;
 import com.back.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
@@ -17,6 +18,7 @@ import static org.springframework.transaction.event.TransactionPhase.AFTER_COMMI
 public class MemberEventListener {
     private final MemberFacade memberFacade;
 
+    @KafkaListener(topics = "PostCreatedEvent", groupId = "MemberEventListener__handle__1")
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(PostCreatedEvent event) {
@@ -25,6 +27,7 @@ public class MemberEventListener {
         member.increaseActivityScore(3);
     }
 
+    @KafkaListener(topics = "PostCommentCreatedEvent", groupId = "MemberEventListener__handle__2")
     @TransactionalEventListener(phase = AFTER_COMMIT)
     @Transactional(propagation = REQUIRES_NEW)
     public void handle(PostCommentCreatedEvent event) {
